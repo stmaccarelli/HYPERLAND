@@ -8,7 +8,7 @@ The HLEnvironment module inits scene, renderer, camera, effects, shaders, geomet
 var HLE = {
   WORLD_WIDTH:1000,
   WORLD_HEIGHT:300,
-  WORLD_TILES:29, // change it according to device capabilities in initEnvironment()
+  WORLD_TILES:199, // change it according to device capabilities in initEnvironment()
 
   FOG:true,
 
@@ -226,17 +226,17 @@ var HLEnvironment = function(){
       wireframeLinewidth: 2
     });
 
-//   HL.materials.land = new THREE.LandMaterial(HL.landStepsCount);
-    HL.materials.land = new THREE.MeshBasicMaterial({
-      color: HLC.land,
-      side: THREE.DoubleSide,
-      fog: true,
-      wireframe: isWire,
-      wireframeLinewidth: 2,
-      shading: THREE.FlatShading,
-      // map: new THREE.TextureLoader().load( "img/blur-400x400.png" ),
-    });
-    HL.materials.land.color = HLC.land; // set by reference
+   HL.materials.land = new THREE.LandMaterial(HL.landStepsCount);
+    // HL.materials.land = new THREE.MeshBasicMaterial({
+    //   color: HLC.land,
+    //   side: THREE.DoubleSide,
+    //   fog: true,
+    //   wireframe: isWire,
+    //   wireframeLinewidth: 2,
+    //   shading: THREE.FlatShading,
+    //   // map: new THREE.TextureLoader().load( "img/blur-400x400.png" ),
+    // });
+    // HL.materials.land.color = HLC.land; // set by reference
 
     // HL.materials.land.map.wrapS = THREE.RepeatWrapping;
     // HL.materials.land.map.wrapT = THREE.RepeatWrapping;

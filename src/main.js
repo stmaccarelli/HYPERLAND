@@ -117,9 +117,9 @@ function guiInit(){
       // remote control / audioreactive
       if(HLDEV.audioReactive) HLR.updateHLParams();
 
-      if(HLDEV.animColors) HLAnim.colors();
+      //if(HLDEV.animColors) HLAnim.colors();
       if(HLDEV.animElements) HLAnim.elements();
-      if(HLDEV.animSea) HLAnim.sea();
+      //if(HLDEV.animSea) HLAnim.sea();
       if(HLDEV.animLand) HLAnim.land();
       HLE.resetTriggers();
 

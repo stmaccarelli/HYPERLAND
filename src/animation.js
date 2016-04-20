@@ -42,21 +42,22 @@ var HLAnim = function(){
       HLE.landStepsCount++;
       // put plane back 1 row, so it will look moving seamless
       HL.land.position.z -= HLE.WORLD_WIDTH / HL.geometries.land.parameters.heightSegments;
-
-      // HL.materials.land.uniforms.step.value = HLE.landStepsCount;
-      //then shift land heights on next rows
-      HLH.shiftHeights(HL.geometries.land);
-      // then calculate LAND first row new heights with noise function
-      for ( var i = 0; i < (HL.geometries.land.parameters.widthSegments + 1); i++){
-        HL.geometries.land.vertices[i].y = HLH.landHeightNoise(
-          i / (HL.geometries.land.parameters.widthSegments),
-          (HLE.landStepsCount / HLE.WORLD_TILES) );
-      }
-      // if we want to use shadows, we have to recalculate normals
-      if(hasShadows){
-        HL.geometries.land.computeFaceNormals();
-        HL.geometries.land.computeVertexNormals();
-      }
+      //
+      // // HL.materials.land.uniforms.step.value = HLE.landStepsCount;
+      // //then shift land heights on next rows
+      // HLH.shiftHeights(HL.geometries.land);
+      // // then calculate LAND first row new heights with noise function
+      // for ( var i = 0; i < (HL.geometries.land.parameters.widthSegments + 1); i++){
+      //   HL.geometries.land.vertices[i].y = HLH.landHeightNoise(
+      //     i / (HL.geometries.land.parameters.widthSegments),
+      //     (HLE.landStepsCount / HLE.WORLD_TILES) );
+      // }
+      // // if we want to use shadows, we have to recalculate normals
+      // if(hasShadows){
+      //   HL.geometries.land.computeFaceNormals();
+      //   HL.geometries.land.computeVertexNormals();
+      // }
+      HL.materials.land.uniforms.step.value = (HLE.landStepsCount / HLE.WORLD_TILES);
 
     }
 
