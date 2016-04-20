@@ -16,6 +16,7 @@
       animColors:true,
       animLand:true,
       animSea:true,
+      cameraHeight:10,
     }
 
     function mainInit(){
@@ -74,6 +75,8 @@ function guiInit(){
     guiDEV.add(HLDEV, 'animElements');
     guiDEV.add(HLDEV, 'animSea');
     guiDEV.add(HLDEV, 'animLand');
+    guiDEV.add(HLDEV, "cameraHeight",10,500);
+    gui.open();
 
 
     // var effectController  = {
@@ -132,7 +135,7 @@ function guiInit(){
         HL.camera.lookAt(new THREE.Vector3(0,0,-HLE.WORLD_WIDTH/2)); // camera looks at center point on horizon
 
       HLE.cameraHeight += (HLE.landHeight*1.50+HLE.landZeroPoint-HLE.cameraHeight) * 0.05;
-      HL.camera.position.y = HLE.cameraHeight + HLE.WORLD_HEIGHT*0.05;
+      HL.camera.position.y = HLDEV.cameraHeight;// + HLE.WORLD_HEIGHT*0.05;
 
 
       // Rendering

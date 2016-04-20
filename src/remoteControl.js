@@ -49,7 +49,7 @@ var HLR = {
       // lerp move speed according to audio
       HLE.reactiveMoveSpeed += (HLR.fft1 * HLE.MAX_MOVE_SPEED - HLE.reactiveMoveSpeed) * 0.001;
     //  HLE.moveSpeed = Math.max(HLE.MAX_MOVE_SPEED, HLE.BASE_MOVE_SPEED + HLE.reactiveMoveSpeed*0.8);
-
+HLE.reactiveMoveSpeed = .02;
       // compute noise frequency for terrain generation
       tempFFT1 += (HLR.fft1 - tempFFT1)*0.005;
       tempFFT2 += (HLR.fft2 - tempFFT2)*0.005;

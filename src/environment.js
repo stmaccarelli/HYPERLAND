@@ -8,7 +8,7 @@ The HLEnvironment module inits scene, renderer, camera, effects, shaders, geomet
 var HLE = {
   WORLD_WIDTH:1000,
   WORLD_HEIGHT:300,
-  WORLD_TILES:199, // change it according to device capabilities in initEnvironment()
+  WORLD_TILES:9, // change it according to device capabilities in initEnvironment()
 
   FOG:true,
 
@@ -186,9 +186,13 @@ var HLEnvironment = function(){
 
     HL.geometries.seabox = new THREE.BoxGeometry(HLE.WORLD_WIDTH, HLE.WORLD_HEIGHT, HLE.WORLD_WIDTH);
 
-    HL.geometries.land = new THREE.PlaneGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES , HLE.WORLD_TILES);
-    HL.geometries.land.dynamic = true;
-    HL.geometries.land.rotateX(-Math.PI / 2); // gotta rotate because Planes in THREE are created vertical
+    // HL.geometries.land = new THREE.PlaneGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES , HLE.WORLD_TILES);
+    // HL.geometries.land.dynamic = true;
+    // HL.geometries.land.rotateX(-Math.PI / 2); // gotta rotate because Planes in THREE are created vertical
+
+     HL.geometries.land = new THREE.PlaneBufferGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES,HLE.WORLD_TILES);
+     HL.geometries.land.rotateX(-Math.PI / 2); // gotta rotate because Planes in THREE are created vertical
+console.log(HL.geometries.land);
   //  HL.geometries.land.translate(0,-(HLE.WORLD_WIDTH/HLE.WORLD_TILES)*3,0);
 
     HL.geometries.sea = new THREE.PlaneGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES , HLE.WORLD_TILES);
@@ -226,7 +230,7 @@ var HLEnvironment = function(){
       wireframeLinewidth: 2
     });
 
-   HL.materials.land = new THREE.LandMaterial(HL.landStepsCount);
+   HL.materials.land = new THREE.LandMaterial();
     // HL.materials.land = new THREE.MeshBasicMaterial({
     //   color: HLC.land,
     //   side: THREE.DoubleSide,
@@ -249,7 +253,7 @@ var HLEnvironment = function(){
       wireframe: isWire,
       wireframeLinewidth: 2,
        opacity: 0.5,
-       //transparent:true,
+       transparent:true,
       // blending: THREE.AdditiveBlending,
       //  map: new THREE.TextureLoader().load( "img/blur-400x400.png" ),
     });

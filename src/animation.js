@@ -36,12 +36,15 @@ var HLAnim = function(){
 
   function land(){
     // move
-    HL.land.position.z += HLE.moveSpeed * HLE.landFriction;
+    // HL.land.position.z = (HL.land.position.z + HLE.moveSpeed * HLE.landFriction) % HLE.WORLD_WIDTH / HL.geometries.land.parameters.heightSegments;
+    HLE.landStepsCount += (HLE.moveSpeed * HLE.landFriction);// / HLE.WORLD_TILES;
+    HL.materials.land.uniforms.step.value = HLE.landStepsCount ;
+    HL.materials.land.uniforms.advance.value = HLE.landStepsCount;
     // if plane moved more than a row
     if (HL.land.position.z > HLE.WORLD_WIDTH / HL.geometries.land.parameters.heightSegments) {
       HLE.landStepsCount++;
       // put plane back 1 row, so it will look moving seamless
-      HL.land.position.z -= HLE.WORLD_WIDTH / HL.geometries.land.parameters.heightSegments;
+    //  HL.land.position.z -= HLE.WORLD_WIDTH / HL.geometries.land.parameters.heightSegments;
       //
       // // HL.materials.land.uniforms.step.value = HLE.landStepsCount;
       // //then shift land heights on next rows
