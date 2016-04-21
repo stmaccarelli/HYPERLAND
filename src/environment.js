@@ -8,7 +8,7 @@ The HLEnvironment module inits scene, renderer, camera, effects, shaders, geomet
 var HLE = {
   WORLD_WIDTH:1000,
   WORLD_HEIGHT:300,
-  WORLD_TILES:9, // change it according to device capabilities in initEnvironment()
+  WORLD_TILES:30, // change it according to device capabilities in initEnvironment()
 
   FOG:true,
 
@@ -17,8 +17,8 @@ var HLE = {
   reactiveMoveSpeed:0, // changes programmatically - audio
   moveSpeed:0, // stores final computer move speed
 
-  landFriction:0,
-  seaFriction:0,
+  landFriction:1,
+  seaFriction:1,
 
   BASE_SEA_SPEED:2.5,
   CLOUDS_SPEED:2,
@@ -158,7 +158,6 @@ var HLEnvironment = function(){
     HL.renderer.setPixelRatio(window.devicePixelRatio);
     HL.renderer._clearColor = HLC.horizon;
 
-    console.log(HL.renderer);
     //HL.renderer.sortObjects = false;
 
     document.body.appendChild(HL.renderer.domElement);
@@ -192,8 +191,7 @@ var HLEnvironment = function(){
 
      HL.geometries.land = new THREE.PlaneBufferGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES,HLE.WORLD_TILES);
      HL.geometries.land.rotateX(-Math.PI / 2); // gotta rotate because Planes in THREE are created vertical
-console.log(HL.geometries.land);
-  //  HL.geometries.land.translate(0,-(HLE.WORLD_WIDTH/HLE.WORLD_TILES)*3,0);
+     //HL.geometries.land.dybamic = true;
 
     HL.geometries.sea = new THREE.PlaneGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES , HLE.WORLD_TILES);
     HL.geometries.sea.rotateX(-Math.PI / 2); // gotta rotate because Planes in THREE are created vertical
@@ -253,7 +251,7 @@ console.log(HL.geometries.land);
       wireframe: isWire,
       wireframeLinewidth: 2,
        opacity: 0.5,
-       transparent:true,
+       transparent:false,
       // blending: THREE.AdditiveBlending,
       //  map: new THREE.TextureLoader().load( "img/blur-400x400.png" ),
     });
@@ -267,7 +265,7 @@ console.log(HL.geometries.land);
       color: HLC.clouds,
       // side: THREE.DoubleSide,
       opacity: 0.1,
-      transparent: true,
+      transparent: false,
       size: 8,
       fog: true,
       sizeAttenuation: false,
@@ -297,7 +295,7 @@ console.log(HL.geometries.land);
       color: HLC.fauna,
       // side: THREE.DoubleSide,
       opacity: .6,
-      transparent: true,
+      transparent: false,
       size: 20,
       fog: true,
       sizeAttenuation: true,
@@ -328,7 +326,7 @@ console.log(HL.geometries.land);
     HL.land.position.y = -1;
     HL.scene.add(HL.land);
 
-    HL.sea = new THREE.Mesh(HL.geometries.sea, HL.materials.sea);
+    HL.sea = new THREE.Mesh(HL.geometries.sea, HL.materials.land);
     HL.scene.add(HL.sea);
 
     // // MIRROR

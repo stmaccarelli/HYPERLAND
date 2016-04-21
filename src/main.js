@@ -70,13 +70,15 @@ function guiInit(){
     guiBase.add(HLR, 'fft4', 0.1, 1.1);
     guiBase.add(HLR, 'fft5', 0.1, 1.1);
     var guiDEV = gui.addFolder("dev");
-    guiDEV.add(HLDEV, 'audioReactive');
-    guiDEV.add(HLDEV, 'animColors');
-    guiDEV.add(HLDEV, 'animElements');
+    // guiDEV.add(HLDEV, 'audioReactive');
+    // guiDEV.add(HLDEV, 'animColors');
+    // guiDEV.add(HLDEV, 'animElements');
     guiDEV.add(HLDEV, 'animSea');
     guiDEV.add(HLDEV, 'animLand');
     guiDEV.add(HLDEV, "cameraHeight",10,500);
+    guiDEV.add(HLE, 'reactiveMoveSpeed',.02,5.0);
     gui.open();
+
 
 
     // var effectController  = {
@@ -117,12 +119,13 @@ function guiInit(){
 
       // Environment and animation
       HLE.moveSpeed = Math.max(Math.min(HLE.MAX_MOVE_SPEED, HLE.BASE_MOVE_SPEED + HLE.reactiveMoveSpeed),0);
+
       // remote control / audioreactive
       if(HLDEV.audioReactive) HLR.updateHLParams();
 
       //if(HLDEV.animColors) HLAnim.colors();
       if(HLDEV.animElements) HLAnim.elements();
-      //if(HLDEV.animSea) HLAnim.sea();
+      if(HLDEV.animSea) HLAnim.sea();
       if(HLDEV.animLand) HLAnim.land();
       HLE.resetTriggers();
 

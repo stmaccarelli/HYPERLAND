@@ -47,9 +47,8 @@ var HLR = {
 
       // compute move speed
       // lerp move speed according to audio
-      HLE.reactiveMoveSpeed += (HLR.fft1 * HLE.MAX_MOVE_SPEED - HLE.reactiveMoveSpeed) * 0.001;
+    //  HLE.reactiveMoveSpeed += (HLR.fft1 * HLE.MAX_MOVE_SPEED - HLE.reactiveMoveSpeed) * 0.001;
     //  HLE.moveSpeed = Math.max(HLE.MAX_MOVE_SPEED, HLE.BASE_MOVE_SPEED + HLE.reactiveMoveSpeed*0.8);
-HLE.reactiveMoveSpeed = .02;
       // compute noise frequency for terrain generation
       tempFFT1 += (HLR.fft1 - tempFFT1)*0.005;
       tempFFT2 += (HLR.fft2 - tempFFT2)*0.005;
@@ -63,7 +62,7 @@ HLE.reactiveMoveSpeed = .02;
      tempDevLandHeight =
       // Math.sin(millis*.5)*
      2 + (tempFFT1 * .35 + tempFFT3 * .15 + HLR.fft1 * .1) * HLE.WORLD_HEIGHT;
-      HLE.landHeight += (tempDevLandHeight-HLE.landHeight)*0.05;
+    //  HLE.landHeight += (tempDevLandHeight-HLE.landHeight)*0.05;
       // HLE.landHeight = Math.sin(millis*.5)*HLE.WORLD_HEIGHT*0.5;
       HLE.landZeroPoint = Math.sin(millis*(1-tempFFT3)) * HLE.landHeight * 0.5;// + HL.noise.noise(millis,millis*0.3,10000)*tempDevLandHeight;//tempFFT2 * HLE.landHeight*0.5;
 
@@ -74,7 +73,7 @@ HLE.reactiveMoveSpeed = .02;
 
       if(HLR.fft2>0.85) HLE.shotFlora = true;
 
-      HLE.landFriction = 1;//Math.sin(millis*HLR.fft3)/2+.5;
+    //  HLE.landFriction = 1;//Math.sin(millis*HLR.fft3)/2+.5;
 
 //      HLC.horizon.setHSL(millis*.1%1,.8, .2 + tempFFT3*.2 + HLR.fft3*.2);
     }
