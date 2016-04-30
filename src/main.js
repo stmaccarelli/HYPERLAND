@@ -5,7 +5,7 @@
     var isDebug = window.location.href.indexOf('?debug')>-1;
     var isFPC = window.location.href.indexOf('?fpc')>-1;
     var isWire = window.location.href.indexOf('?wire')>-1;
-    var hasShadows = true;
+    var hasShadows = false;
 
     var frameCount = 0;
     var millis = 0;
@@ -118,15 +118,17 @@ function guiInit(){
 
 
       // Environment and animation
-      HLE.moveSpeed = Math.max(Math.min(HLE.MAX_MOVE_SPEED, HLE.BASE_MOVE_SPEED + HLE.reactiveMoveSpeed),0);
+      HLE.moveSpeed = Math.max(Math.min(HLE.MAX_MOVE_SPEED, HLE.BASE_MOVE_SPEED + HLE.reactiveMoveSpeed),0) * HLE.landFriction;
+      HLE.advance += HLE.moveSpeed; // advance is a master advance rate for the entire environment
+
 
       // remote control / audioreactive
       if(HLDEV.audioReactive) HLR.updateHLParams();
 
-      //if(HLDEV.animColors) HLAnim.colors();
+      if(HLDEV.animColors) HLAnim.colors();
       if(HLDEV.animElements) HLAnim.elements();
       if(HLDEV.animSea) HLAnim.sea();
-      if(HLDEV.animLand) HLAnim.land();
+      HLAnim.landGLSL();
       HLE.resetTriggers();
 
       // Controls

@@ -6,9 +6,9 @@ The HLEnvironment module inits scene, renderer, camera, effects, shaders, geomet
 
 // HL Environment constants and parameters
 var HLE = {
-  WORLD_WIDTH:1000,
-  WORLD_HEIGHT:300,
-  WORLD_TILES:30, // change it according to device capabilities in initEnvironment()
+  WORLD_WIDTH:1500,
+  WORLD_HEIGHT:500,
+  WORLD_TILES:40, // change it according to device capabilities in initEnvironment()
 
   FOG:true,
 
@@ -16,6 +16,7 @@ var HLE = {
   BASE_MOVE_SPEED: 1,
   reactiveMoveSpeed:0, // changes programmatically - audio
   moveSpeed:0, // stores final computer move speed
+  advance:10, // records total advance
 
   landFriction:1,
   seaFriction:1,
@@ -228,7 +229,7 @@ var HLEnvironment = function(){
       wireframeLinewidth: 2
     });
 
-   HL.materials.land = new THREE.LandMaterial();
+   HL.materials.land = new THREE.LandMaterial(HLE.WORLD_WIDTH,HLE.WORLD_TILES);
     // HL.materials.land = new THREE.MeshBasicMaterial({
     //   color: HLC.land,
     //   side: THREE.DoubleSide,
@@ -319,14 +320,13 @@ var HLEnvironment = function(){
     //HL.skybox.position.y = HLE.WORLD_WIDTH/4;
     HL.scene.add(HL.skybox);
 
-    HL.seabox = new THREE.Mesh(HL.geometries.seabox, HL.materials.seabox);
-  //  HL.scene.add(HL.seabox);
 
     HL.land = new THREE.Mesh(HL.geometries.land, HL.materials.land);
-    HL.land.position.y = -1;
+    HL.land.position.y = -10;
     HL.scene.add(HL.land);
+    console.log(HL.geometries.land);
 
-    HL.sea = new THREE.Mesh(HL.geometries.sea, HL.materials.land);
+    HL.sea = new THREE.Mesh(HL.geometries.sea, HL.materials.sea);
     HL.scene.add(HL.sea);
 
     // // MIRROR
@@ -344,9 +344,9 @@ var HLEnvironment = function(){
     //HL.flora.frustumCulled = true;
     HL.scene.add(HL.flora);
 
-    // HL.fauna = new THREE.Points(HL.geometries.fauna, HL.materials.fauna);
-    // //HL.fauna.frustumCulled = true;
-    // HL.scene.add(HL.fauna);
+    HL.fauna = new THREE.Points(HL.geometries.fauna, HL.materials.fauna);
+    //HL.fauna.frustumCulled = true;
+    HL.scene.add(HL.fauna);
 
   }
 
