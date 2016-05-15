@@ -8,7 +8,7 @@ The HLEnvironment module inits scene, renderer, camera, effects, shaders, geomet
 var HLE = {
   WORLD_WIDTH:1500,
   WORLD_HEIGHT:500,
-  WORLD_TILES:40, // change it according to device capabilities in initEnvironment()
+  WORLD_TILES:500, // change it according to device capabilities in initEnvironment()
 
   FOG:true,
 
@@ -194,7 +194,7 @@ var HLEnvironment = function(){
      HL.geometries.land.rotateX(-Math.PI / 2); // gotta rotate because Planes in THREE are created vertical
      //HL.geometries.land.dybamic = true;
 
-    HL.geometries.sea = new THREE.PlaneGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES , HLE.WORLD_TILES);
+    HL.geometries.sea = new THREE.PlaneGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, 10 , 10);
     HL.geometries.sea.rotateX(-Math.PI / 2); // gotta rotate because Planes in THREE are created vertical
     HL.geometries.sea.dynamic = true;
     // HL.geometries.sea = new THREE.PlaneBufferGeometry(HLE.WORLD_WIDTH, HLE.WORLD_WIDTH, HLE.WORLD_TILES,HLE.WORLD_TILES);
