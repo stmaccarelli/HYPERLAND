@@ -55,7 +55,8 @@ var HLR = {
   tempDevLandHeight=0,
   tempLandZeroPoint=0,
   tempnoiseFreq=0,
-  tempNoiseFreq2=0;
+  tempNoiseFreq2=0,
+  shotFlora = false;
 
   HLR.updateHLParams = function(){
     this.updateFFT(AA.getFreq(0), AA.getFreq(1), AA.getFreq(12), AA.getFreq(32), AA.getFreq(64));
@@ -110,14 +111,14 @@ var HLR = {
       // HLC.horizon.setHSL(millis*0.1%1,.4, HLR.fft3*.3);
     // HLC.horizon.setHSL(millis*0.1%1,.6, .1 + HLR.fft3*HLR.fft3*0.7);
 
-    HLC.horizon.setHSL((frameCount/3600)%1,.2, .1 + HLR.fft3);
+  //  HLC.horizon.setHSL((frameCount/3600)%1,.2, .1 + HLR.fft3);
   //  HL.materials.water.material.uniforms.sunColor.value = HLC.horizon;//HLC.horizon;
     // HL.materials.water.material.uniforms.color.value = new THREE.Color(0x000000);//HLC.horizon;
 
   // HLC.horizon.setHSL((frameCount/36000)%1,1-HLR.fft1*HLR.fft4*0.4, .2 + HLR.fft1*.4);
 
-    HL.materials.land.uniforms.color.value = HLC.land.setHSL((frameCount/3600)%1+.25,.9, .1+HLR.fft3*.5);
-    if(!HLE.WATER) HLC.sea.setHSL(0,0,.05-HLR.fft5*.5);
+//    HL.materials.land.uniforms.color.value = HLC.land.setHSL((frameCount/3600)%1+.25,.9, .1+HLR.fft3*.5);
+//    if(!HLE.WATER) HLC.sea.setHSL(0,0,.05-HLR.fft5*.5);
     //HL.materials.clouds.size = 1000 - HLE.landHeight * 10;
 
 

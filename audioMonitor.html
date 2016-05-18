@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>HYPERLAND SYSTEM MONITOR</title>
+	<meta charset="utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body width="100%" style="margin:20px;">
+  <canvas id="canvas" style="margin:0 0 24px;"></canvas>
+	<button id="peakReset">RESET PEAKS</button>
+<!--
+	<div id="splash">
+		<div id ="prompt">
+			<div id="prompt-big">Collect the crystals <br> before the dawn comes!</div>
+			<div id="prompt-small">Use arrow keys to move left or right.</div>
+		</div>
+	</div>
+	<div id="debug-text"></div>
+	<div id="score-text">0</div>
+	<div id="container"></div>
+	<div id="music-toggle"></div>
+	<div id="preloader"></div>
+
+	<div id="info">Built with Love by <a href='http://www.airtight.cc'>Airtight</a>. Try it on Mobile!</div> -->
+
+  <!--
+  A BIG thanks to airtight.cc for the WebGL / THREE.JS tutorials
+  The main landscape motion logic is based on Winter Rush game logic developed by airtight.cc
+  -->
+	<!-- Utils Libs -->
+  <script src="lib/NoSleep.min.js"></script>
+  <script src="lib/NoScroll.js"></script>
+
+	<!-- DEV audio lib -->
+	<script src="lib/dev/AudioAnalyzerDev.js"></script>
+
+  <script type="text/javascript">
+    var canvas = document.getElementById("canvas");
+    canvas.width = document.body.clientWidth;
+    var c = canvas.getContext("2d");
+    var totalFreqs = AA.getFreqArray.length;
+    var barWidth = canvas.width/totalFreqs-1;
+    var barHeight = 200;
+		canvas.height = barHeight;
+
+    var freq;//temp freq to draw
+    var peak = [];
+		var REDUCEPEAKS = false;
+
+    function update(){
+      // c.clearRect(0,0,c.width,c.height);
+      c.fillStyle = "rgb(50,50,50)";
+      c.fillRect (0, 0, canvas.width, barHeight);
+
+			//DRAW BARS
+      for(var i in AA.getFreqArray){
+        freq = AA.getFreq(i);
+        c.fillStyle = "hsl("+(256-freq*256)+",100%,50%)";
+        c.fillRect (i*(barWidth+1), barHeight, barWidth, -freq*barHeight);
+      }
+
+			//DRAW PEAKS
+      for(var i in AA.getFreqArray){
+        c.fillStyle = "hsl("+(256-peak[i]*256)+",100%,"+(peak[i]>.99?100:50)+"%)";
+        c.fillRect (i*(barWidth+4), barHeight-peak[i]*barHeight, barWidth, 10);
+        if(AA.getFreq(i)>peak[i] || peak[i]===undefined) peak[i] = AA.getFreq(i);
+
+				if(REDUCEPEAKS)
+         for(var i in peak)
+           peak[i]-=0.00001;
+      }
+
+      //draw a middle level line
+      c.fillStyle="rgb(255,255,255)";
+      c.fillRect(0,barHeight*.5,canvas.width,2);
+
+			//draw a 3/4 level line
+			c.fillStyle="rgb(255,255,255)";
+			c.fillRect(0,barHeight*.25,canvas.width,2);
+
+			//call rAF
+      window.requestAnimationFrame(update);
+    };
+      window.addEventListener("AAload",function(){
+        update();
+      },false);
+
+			window.addEventListener('resize',function(){
+				canvas.width = window.innerWidth;
+				barWidth = canvas.width/totalFreqs-1;
+
+
+			},false);
+
+			document.getElementById('peakReset').addEventListener('click',function(){ peak=[]; },false);
+  </script>
+
+</body>
+</html>
