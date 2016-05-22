@@ -58,7 +58,7 @@
     delta = HL.clock.getDelta();
 
     // remote control / audioreactive
-    HLR.updateHLParams();
+//    HLR.updateHLParams(AA.getFreq(0), AA.getFreq(1), AA.getFreq(12), AA.getFreq(32), AA.getFreq(64));
     //if(HLDEV.animColors) HLAnim.colors();
     HLAnim.particles();
     if(!HLE.MIRROR && !HLE.WATER) HLAnim.sea();
@@ -116,5 +116,5 @@
     // init HyperLand Environment
     HLEnvironment.init();
     // run is called by HLEnvironment.init() when it's all loaded
-    window.addEventListener('HLEload', function(){console.log("event HLEload received"); run(); });
+    window.addEventListener('HLEload', function(){console.log("event HLEload received"); socketVisual.init(); run(); });
   });

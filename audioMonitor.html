@@ -34,8 +34,43 @@
   <script src="lib/NoSleep.min.js"></script>
   <script src="lib/NoScroll.js"></script>
 
+	<!-- NODE SOCKET.IO -->
+	<script src="http://pixelsmasher.io:1502/socket.io/socket.io.js" type="text/javascript"></script>
+
 	<!-- DEV audio lib -->
 	<script src="lib/dev/AudioAnalyzerDev.js"></script>
+
+	<script type="text/javascript">
+	window.addEventListener('load',init, true);
+
+	function init(){
+		var socket = io('http://pixelsmasher.io:1502');
+
+		// TODO: webworker per emit messaggi FFT
+		function fakeAudioAnalysis(){
+			window.setTimeout(function(){ window.requestAnimationFrame(fakeAudioAnalysis)}, 1000/15);
+			socket.emit('mxr_push_fft',{
+				a:AA.getFreq(0),
+				b:AA.getFreq(1),
+				c:AA.getFreq(12),
+				d:AA.getFreq(32),
+				e:AA.getFreq(64)
+			});
+		}
+
+
+//	AA.getFreqArray
+// window.addEventListener("AAload",fakeAudioAnalysis);
+ window.addEventListener("AAload",function(){
+//	window.setInterval(fakeAudioAnalysis,1000/30);
+fakeAudioAnalysis();
+});
+		window.addEventListener('keyup',emit_keystroke,true);
+		function emit_keystroke(e){
+			socket.emit('mxr_push_key',{a:e.keyCode});
+		}
+	}
+	</script>
 
   <script type="text/javascript">
     var canvas = document.getElementById("canvas");
@@ -91,8 +126,6 @@
 			window.addEventListener('resize',function(){
 				canvas.width = window.innerWidth;
 				barWidth = canvas.width/totalFreqs-1;
-
-
 			},false);
 
 			document.getElementById('peakReset').addEventListener('click',function(){ peak=[]; },false);

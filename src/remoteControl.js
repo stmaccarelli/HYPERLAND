@@ -58,8 +58,11 @@ var HLR = {
   tempNoiseFreq2=0,
   shotFlora = false;
 
-  HLR.updateHLParams = function(){
-    this.updateFFT(AA.getFreq(0), AA.getFreq(1), AA.getFreq(12), AA.getFreq(32), AA.getFreq(64));
+
+
+  HLR.updateHLParams = function(a,b,c,d,e){
+  //  this.updateFFT(AA.getFreq(0), AA.getFreq(1), AA.getFreq(12), AA.getFreq(32), AA.getFreq(64));
+    this.updateFFT(a,b,c,d,e);
 
 
       // HLE.faunaAmount = Math.round(HLR.connectedUsers);
@@ -116,7 +119,7 @@ var HLR = {
     // HL.materials.water.material.uniforms.color.value = new THREE.Color(0x000000);//HLC.horizon;
 
   // HLC.horizon.setHSL((frameCount/36000)%1,1-HLR.fft1*HLR.fft4*0.4, .2 + HLR.fft1*.4);
-
+HLC.horizon.setRGB(HLR.fft2,HLR.fft3,HLR.fft4);
 //    HL.materials.land.uniforms.color.value = HLC.land.setHSL((frameCount/3600)%1+.25,.9, .1+HLR.fft3*.5);
 //    if(!HLE.WATER) HLC.sea.setHSL(0,0,.05-HLR.fft5*.5);
     //HL.materials.clouds.size = 1000 - HLE.landHeight * 10;

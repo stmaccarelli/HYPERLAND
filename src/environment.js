@@ -18,7 +18,7 @@ var HLE = {
   FOG:true,
   MIRROR:isWire===true?false: false,
   WATER:isWire===true?false: true,
-  PIXEL_RATIO_SCALE:.5,
+  PIXEL_RATIO_SCALE:.25,
 
   MAX_MOVE_SPEED: null,
   BASE_MOVE_SPEED: null,
