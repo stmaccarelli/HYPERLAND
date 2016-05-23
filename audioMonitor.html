@@ -48,7 +48,7 @@
 
 		// TODO: webworker per emit messaggi FFT
 		function fakeAudioAnalysis(){
-			window.setTimeout(function(){ window.requestAnimationFrame(fakeAudioAnalysis)}, 1000/15);
+			window.setTimeout(function(){ window.requestAnimationFrame(fakeAudioAnalysis)}, 1000/30);
 			socket.emit('mxr_push_fft',{
 				a:AA.getFreq(0),
 				b:AA.getFreq(1),
