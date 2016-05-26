@@ -8,7 +8,7 @@ The HLEnvironment module inits scene, renderer, camera, effects, shaders, geomet
 var HLE = {
   WORLD_WIDTH:5000,
   WORLD_HEIGHT:300,
-  WORLD_TILES:(isMobile?64:256), // change it according to device capabilities in initEnvironment()
+  WORLD_TILES:(isMobile?128:128), // change it according to device capabilities in initEnvironment()
   TILE_SIZE:null,
   SEA_TILES:32, // change it according to device capabilities in initEnvironment()
   SEA_TILE_SIZE:null,

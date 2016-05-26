@@ -10,7 +10,8 @@
 </head>
 <body width="100%" style="margin:20px;">
   <canvas id="canvas" style="margin:0 0 24px;"></canvas>
-	<button id="peakReset">RESET PEAKS</button>
+	<button id="peakReset" style="height:40px; font-size:30px;">RESET PEAKS</button>
+	<button id="showUseful" style="height:40px; font-size:30px;" onclick="javascript:showUseful=!showUseful;">SHOW/HIDE USED FREQS</button>
 <!--
 	<div id="splash">
 		<div id ="prompt">
@@ -48,7 +49,7 @@
 
 		// TODO: webworker per emit messaggi FFT
 		function fakeAudioAnalysis(){
-			window.setTimeout(function(){ window.requestAnimationFrame(fakeAudioAnalysis)}, 1000/30);
+			window.setTimeout(function(){ window.requestAnimationFrame(fakeAudioAnalysis)}, 1000/20);
 			socket.emit('mxr_push_fft',{
 				a:AA.getFreq(0),
 				b:AA.getFreq(1),
@@ -59,30 +60,41 @@
 		}
 
 
-//	AA.getFreqArray
-// window.addEventListener("AAload",fakeAudioAnalysis);
- window.addEventListener("AAload",function(){
-//	window.setInterval(fakeAudioAnalysis,1000/30);
-fakeAudioAnalysis();
-});
+		//	AA.getFreqArray
+		// window.addEventListener("AAload",fakeAudioAnalysis);
+		 window.addEventListener("AAload",function(){
+		//	window.setInterval(fakeAudioAnalysis,1000/30);
+		fakeAudioAnalysis();
+		});
+
 		window.addEventListener('keyup',emit_keystroke,true);
 		function emit_keystroke(e){
 			socket.emit('mxr_push_key',{a:e.keyCode});
 		}
+
+		socket.on('mobi_count',function(e){console.log(e)});
+
 	}
 	</script>
 
   <script type="text/javascript">
     var canvas = document.getElementById("canvas");
-    canvas.width = document.body.clientWidth;
+		var resScale = 0.5;
+    canvas.width = document.body.clientWidth*resScale;
+		canvas.style.width = document.body.clientWidth+"px";
+		canvas.style.imageRendering = 'pixelated';
+		canvas.style.imageRendering += '-webkit-crisp-edges';
+		canvas.style.imageRendering += '-moz-crisp-edges';
     var c = canvas.getContext("2d");
     var totalFreqs = AA.getFreqArray.length;
-    var barWidth = canvas.width/totalFreqs-1;
-    var barHeight = 200;
+    var barWidth = canvas.width/totalFreqs-resScale;
+    var barHeight = canvas.width * 0.25;
 		canvas.height = barHeight;
 
     var freq;//temp freq to draw
     var peak = [];
+		var useful;
+		var showUseful = true;
 		var REDUCEPEAKS = false;
 
     function update(){
@@ -93,20 +105,32 @@ fakeAudioAnalysis();
 			//DRAW BARS
       for(var i in AA.getFreqArray){
         freq = AA.getFreq(i);
-        c.fillStyle = "hsl("+(256-freq*256)+",100%,50%)";
-        c.fillRect (i*(barWidth+1), barHeight, barWidth, -freq*barHeight);
-      }
+				if(showUseful) useful = (i==0 || i==1 || i==12 || i==32 || i==64)?50:15;
+				else useful = 50;
 
-			//DRAW PEAKS
-      for(var i in AA.getFreqArray){
-        c.fillStyle = "hsl("+(256-peak[i]*256)+",100%,"+(peak[i]>.99?100:50)+"%)";
-        c.fillRect (i*(barWidth+4), barHeight-peak[i]*barHeight, barWidth, 10);
+					c.fillRect (i*(barWidth+resScale), barHeight, barWidth, -barWidth);
+        c.fillStyle = "hsl("+(256-freq*256)+",100%,"+useful+"%)";
+        c.fillRect (i*(barWidth+resScale), barHeight, barWidth, -freq*barHeight);
+
+				c.fillStyle = "hsl("+(256-peak[i]*256)+",100%,"+(peak[i]>.99?100:useful)+"%)";
+				//draw peaks
+				c.fillRect (i*(barWidth+resScale), barHeight-peak[i]*barHeight, barWidth, barWidth);
         if(AA.getFreq(i)>peak[i] || peak[i]===undefined) peak[i] = AA.getFreq(i);
-
 				if(REDUCEPEAKS)
-         for(var i in peak)
-           peak[i]-=0.00001;
+				 for(var i in peak)
+					 peak[i]-=0.00001;
       }
+
+			// //DRAW PEAKS
+      // for(var i in AA.getFreqArray){
+      //   c.fillStyle = "hsl("+(256-peak[i]*256)+",100%,"+(peak[i]>.99?100:50)+"%)";
+      //   c.fillRect (i*(barWidth+resScale), barHeight-peak[i]*barHeight, barWidth, barWidth);
+      //   if(AA.getFreq(i)>peak[i] || peak[i]===undefined) peak[i] = AA.getFreq(i);
+			//
+			// 	if(REDUCEPEAKS)
+      //    for(var i in peak)
+      //      peak[i]-=0.00001;
+      // }
 
       //draw a middle level line
       c.fillStyle="rgb(255,255,255)";

@@ -135,7 +135,7 @@ HLC.horizon.setRGB(HLR.fft2,HLR.fft3,HLR.fft4);
     // //  else HL.materials.water.material.uniforms.color.value = HLC.sea.set(0x000000);
     // }
 
-    if(HLR.fft3>0.8 )
+    if(HLR.fft3>0.75 )
     //HLH.startModel(HL.models.whale,THREE.Math.randInt(-HLE.WORLD_WIDTH,HLE.WORLD_WIDTH)*.1,HLE.WORLD_HEIGHT*2, 2);
     HLH.startModel(HL.models.whale,THREE.Math.randInt(-HLE.WORLD_WIDTH/2,HLE.WORLD_WIDTH/2),HLE.WORLD_HEIGHT*3, 10);
 
