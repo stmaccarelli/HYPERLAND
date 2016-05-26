@@ -99,13 +99,6 @@
     else HL.renderer.render(HL.scene,HL.camera);
 
 
-    // Rendering
-    if(isVR){
-    //  HL.renderer.setRenderTarget( null ); not needed anymore??
-      HL.stereoEffect.render(HL.scene,HL.camera);
-    }
-    else HL.renderer.render(HL.scene,HL.camera);
-
   }
 
 

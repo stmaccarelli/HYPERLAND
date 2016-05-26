@@ -78,7 +78,7 @@ var HLR = {
       // lerp move speed according to audio
       HLE.reactiveMoveSpeed = (tempFFT1 + HLR.fft1 + HLR.fft4) * .3 *HLE.MAX_MOVE_SPEED;
 
-      if(HLE.WATER) HL.materials.water.material.uniforms.time.value += 0.001 + HLE.moveSpeed * .005 + HLR.fft4*0.1;
+      // if(HLE.WATER) HL.materials.water.material.uniforms.time.value += 0.01 + HLE.moveSpeed * .05;
 
     //  HLE.CLOUDS_SPEED = 1 + tempFFT4*20;
       // HLE.BASE_SEA_SPEED = 2.5 + HLR.fft3*1.1;
