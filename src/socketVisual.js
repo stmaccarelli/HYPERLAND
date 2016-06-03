@@ -10,6 +10,7 @@ var socketVisual = function(){
     console.log('socket event listeners set');
 
     socket.on('mxr_push_to_cli_fft', function(d){
+      console.log('received');
       HLR.updateHLParams(
       d.msg.a,
       d.msg.b,

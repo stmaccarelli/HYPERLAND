@@ -36,12 +36,13 @@ var HLS ={
 
       window.cancelAnimationFrame(HLS.raf);
       //init new scene
-      if(HLS[sceneId+'init']!==undefined)
-      HLS.raf =  window.requestAnimationFrame(HLS[sceneId+'init']);
       // supported: timer useful for timed scene switch from one to another like:
       //  if(frameCount-HLS.sceneStart>=600) HLR.startScene('scene2');
       HLS.sceneStart = frameCount;
       //start new animation
+      if(HLS[sceneId+'init']!==undefined)
+        HLS[sceneId+'init']();
+
     }
   }
 
@@ -66,8 +67,8 @@ var HLS ={
 
     HLS.raf = window.requestAnimationFrame(HLS.scene1);
     HLS.cameraRotation();
-    if(frameCount%300==0)
-      HLS.shootGroup('sea',5,false);
+    // if(frameCount%300==0)
+    //   HLS.shootGroup('sea',5,false);
 
     HLS.sceneProgress=(frameCount - HLS.sceneStart)*0.001;
 
@@ -99,8 +100,8 @@ var HLS ={
 
     HLS.raf = window.requestAnimationFrame(HLS.scene2);
     HLS.cameraRotation();
-    if(frameCount%300==0)
-      HLS.shootGroup('weird',5,true);
+    // if(frameCount%300==0)
+    //   HLS.shootGroup('weird',5,true);
 
 
     HLS.tempColor = HLR.fft2*HLR.fft2*HLR.fft2*.5 - HLR.fft3*3;
@@ -159,8 +160,8 @@ var HLS ={
 
     HLS.raf = window.requestAnimationFrame(HLS.scene3);
     HLS.cameraRotation();
-    if(frameCount%300==0)
-      HLS.shootGroup('space',5,true);
+    // if(frameCount%300==0)
+    //   HLS.shootGroup('space',5,true);
 
 
     HLH.loopParticles(HL.geometries.clouds, HLE.WORLD_WIDTH, HLE.moveSpeed*4);
@@ -181,7 +182,7 @@ var HLS ={
   }
 
   HLS.cameraRotation = function(){
-    // HL.camera.rotateY(HL.noise.nNoise(HLR.fft3*0.0002, HLR.fft1*0.0015,100));
+     HL.camera.rotateY(frameCount*=0.0001);
     //HL.camera.rotateX(HL.noise.nNoise(HLR.fft5*0.00013, HLR.fft2*0.0005,100));
   }
 

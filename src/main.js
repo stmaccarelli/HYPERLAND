@@ -57,7 +57,7 @@
     // remote control / audioreactive
     // if we are on SOCKET MODE this function will be called by a socket.on() event
     // so we should not call it here.
-   HLRemote.updateHLParams(AA.getFreq(2), AA.getFreq(0), AA.getFreq(400), AA.getFreq(64), AA.getFreq(200));
+    // HLRemote.updateHLParams(AA.getFreq(2), AA.getFreq(0), AA.getFreq(400), AA.getFreq(64), AA.getFreq(200));
     //  HLRemote.updateHLParams(1,1,1,1,1);
 
     // HLAnim.particles(); // moved in sceneManager
@@ -108,7 +108,7 @@
     HLEnvironment.init();
     // hud = new HUD(true);
     // run is called by HLEnvironment.init() when it's all loaded
-    window.addEventListener('HLEload', function(){console.log("event HLEload received"); run(); });
+    window.addEventListener('HLEload', function(){console.log("event HLEload received"); socketVisual.init(); run(); });
     window.removeEventListener('load',loadRoutine,false);
   }
   window.addEventListener('load',loadRoutine,false);
