@@ -80,7 +80,7 @@ var HLRemote = function(){
       // HLE.moveSpeed += ((max( HLE.reactiveMoveSpeed,0))-HLE.moveSpeed) * 0.25;
 
       // compute move speed
-      HLE.reactiveMoveSpeed = 1 + (HLR.fft1 + HLR.fft4) * 0.75 * HLE.BASE_MOVE_SPEED;
+      HLE.reactiveMoveSpeed = 1 + (HLR.fft2 + HLR.fft4) * 0.5 * HLE.BASE_MOVE_SPEED;
       HLE.moveSpeed += (HLE.reactiveMoveSpeed-HLE.moveSpeed)*0.5;
   //    HLE.moveSpeed = HLE.reactiveMoveSpeed<0?0:HLE.reactiveMoveSpeed;
 

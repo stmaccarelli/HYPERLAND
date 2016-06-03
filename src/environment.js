@@ -30,7 +30,7 @@ var HLE = {
   BASE_SEA_SPEED:2.5,
   CLOUDS_SPEED:1,
 
-  MAX_MODELS_OUT:50,
+  MAX_MODELS_OUT:30,
 
   reactiveSeaHeight:0, // changes programmatically - audio
 
@@ -130,9 +130,9 @@ var HL = {
   },
   models: {
     whale:["3dm/BL_WHALE/BL_WHALE2.OBJ",50],
-    whale2:["3dm/BL_WHALE/BL_WHALE2.OBJ",120],
+    whale2:["3dm/BL_WHALE/BL_WHALE2.OBJ",80],
     ducky:["3dm/ducky/ducky.obj",80],
-    airbus:["3dm/airbus/airbus_c.obj",100],
+    airbus:["3dm/airbus/airbus_c.obj",80],
     aurora:["3dm/aurora/aurora_c.obj",70],
     heartbomb:["3dm/heartbomb/heartbomb_c.obj",50],
     mercury:["3dm/mercury/mercury_c.obj",80],

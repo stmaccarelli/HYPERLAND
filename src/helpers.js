@@ -259,11 +259,11 @@ var HLH = function() {
 		}
 
 		if(rotations.indexOf('x')!=-1)
-			HL.dynamicModels['m'+dynModCounter].rotateX((Math.random()-0.5)*3);
+			HL.dynamicModels['m'+dynModCounter].rotateX((Math.random()-0.5)*6);
 		if(rotations.indexOf('y')!=-1)
-			HL.dynamicModels['m'+dynModCounter].rotateY((Math.random()-0.5)*3);
+			HL.dynamicModels['m'+dynModCounter].rotateY((Math.random()-0.5)*6);
 		if(rotations.indexOf('z')!=-1)
-			HL.dynamicModels['m'+dynModCounter].rotateZ((Math.random()-0.5)*3);
+			HL.dynamicModels['m'+dynModCounter].rotateZ((Math.random()-0.5)*6);
 
 		HL.dynamicModels['m'+dynModCounter].size = model.size;
 		HL.dynamicModels['m'+dynModCounter].scale.set(.7+Math.random()*.3, .7+Math.random()*.3, .7+Math.random()*.3);

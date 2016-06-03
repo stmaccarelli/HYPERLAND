@@ -70,9 +70,13 @@ var HLS ={
     // if(frameCount%300==0)
     //   HLS.shootGroup('sea',5,false);
 
+    HLH.loopParticles(HL.geometries.clouds, HLE.WORLD_WIDTH, HLE.moveSpeed*2, 1);
+
+
     HLS.sceneProgress=(frameCount - HLS.sceneStart)*0.001;
 
-    HLC.horizon.setHSL((frameCount/3600)%1,.2, (Math.sin(HLS.sceneProgress)+1)*0.25 + HLR.fft2*1.1-HLR.fft3*5.5);
+    HLC.horizon.setHSL((frameCount/3600)%1,.2, (Math.sin(HLS.sceneProgress)+1)*0.25
+     + HLR.fft3*0.55 + HLR.fft2*0.3);
 
     HL.materials.land.uniforms.color.value = HLC.land.setHSL(0,0, .1+HLR.fft3*.3);
   }
@@ -95,8 +99,8 @@ var HLS ={
   }
 
   HLS.scene2 = function(){
-    if(frameCount%500==0)
-      HLS.startScene('scene3');
+    // if(frameCount%500==0)
+    //   HLS.startScene('scene3');
 
     HLS.raf = window.requestAnimationFrame(HLS.scene2);
     HLS.cameraRotation();
@@ -104,9 +108,9 @@ var HLS ={
     //   HLS.shootGroup('weird',5,true);
 
 
-    HLS.tempColor = HLR.fft2*HLR.fft2*HLR.fft2*.5 - HLR.fft3*3;
+    HLS.tempColor = HLR.fft2*HLR.fft2*.3+HLR.fft3*.2;
 
-    HLC.horizon.setRGB(HLS.tempColor+(millis*.003%.5),HLS.tempColor+(millis*.0029%.5),HLS.tempColor+(millis*.0031%.5));
+    HLC.horizon.setRGB(HLS.tempColor+(millis*.03%.5),HLS.tempColor+(millis*.029%.5),HLS.tempColor+(millis*.031%.5));
     //HLC.horizon.setRGB(.2+(colorCycle)%.8,.1+(colorCycle)%.8,(colorCycle)%.8);
     HLH.loopParticles(HL.geometries.clouds, HLE.WORLD_WIDTH, 10, 1);
     //stars dynamicTextureAni
@@ -127,7 +131,7 @@ var HLS ={
     HL.materials.water.material.uniforms.alpha.value = .85 + HLR.fft1*.5;
 //    HL.materials.water.needsUpdate = true;
 
-    if(HLR.fft3>.3) HL.materials.land.uniforms.color.value = HLC.land.setHSL(Math.random(),1,.5);//,.5+Math.random(),.5+Math.random());
+    if(HLR.fft3>.25) HL.materials.land.uniforms.color.value = HLC.land.setRGB(HLR.fft2+Math.random(),HLR.fft2+Math.random(),HLR.fft2+Math.random());//,.5+Math.random(),.5+Math.random());
 
 
   }
@@ -155,8 +159,7 @@ var HLS ={
   HLS.story = 'HYPEROCEAN NIAGARA'.split(' ');
 
   HLS.scene3 = function(){
-    if(frameCount%500==0)
-      HLS.startScene('scene1');
+
 
     HLS.raf = window.requestAnimationFrame(HLS.scene3);
     HLS.cameraRotation();
@@ -167,7 +170,10 @@ var HLS ={
     HLH.loopParticles(HL.geometries.clouds, HLE.WORLD_WIDTH, HLE.moveSpeed*4);
 
     HL.materials.land.uniforms.color.value = HLC.land.setRGB(HLR.fft4*.1,HLR.fft4*.1,HLR.fft4*.1);//,.5+Math.random(),.5+Math.random());
-    HLC.horizon.setRGB(0+ HLR.fft3,.3+ HLR.fft3,.6 + HLR.fft3);
+
+    if(HLR.fft3>.25)
+      HLS.tempColor = Math.random()*.5;
+    HLC.horizon.setRGB(.3 * HLS.tempColor+ HLR.fft3,HLS.tempColor+ HLR.fft3,.6-HLS.tempColor + HLR.fft3);
 
 
     HL.dynamicTextures.stars.c.clearRect(0,0,HL.dynamicTextures.stars.width,HL.dynamicTextures.stars.height);
@@ -177,13 +183,18 @@ var HLS ={
     HL.dynamicTextures.stars.texture.needsUpdate=true;
 
 
-
-
   }
 
+  var camR=10,camT,camD,camX,camY,camZ=100;
   HLS.cameraRotation = function(){
-     HL.camera.rotateY(frameCount*=0.0001);
-    //HL.camera.rotateX(HL.noise.nNoise(HLR.fft5*0.00013, HLR.fft2*0.0005,100));
+    // camD = frameCount*=0.01;
+    // camT = frameCount*=0.01;
+    //
+    // camX = Math.sin(camD)*Math.sin(camT)*camR;
+    // camY = Math.cos(camD)*Math.sin(camT)*camR;
+    // camZ = Math.cos(camT)*camR;
+      HL.camera.rotateY(frameCount*=0.0001);
+     // HL.camera.rotateX(HL.noise.nNoise(frameCount*0.0013, frameCount*0.005,100)*0.07);
   }
 
   HLS.shootEverything = function(){
@@ -193,11 +204,18 @@ var HLS ={
      0, 'xyz');    // shoot all models from a group
   }
 
+  HLS.trashEverything = function(){
+    HLH.startModel(HL.models[HL.modelsKeys[Math.floor(Math.random()*HL.modelsKeys.length)]],
+     THREE.Math.randInt(-HLE.WORLD_WIDTH/4,HLE.WORLD_WIDTH/4),
+     true,
+     true);    // shoot all models from a group
+  }
+
   HLS.shootGroup = function(g,s,r){
     HLH.startModel(HL.models[HL.mGroups[g][Math.floor(Math.random()*HL.mGroups[g].length)]],
      THREE.Math.randInt(-HLE.WORLD_WIDTH/4,HLE.WORLD_WIDTH/4),
-     THREE.Math.randInt(HLE.WORLD_HEIGHT*0.4,HLE.WORLD_HEIGHT*3),
-     s, (r?'xyz':null) );    // shoot all models from a group
+     THREE.Math.randInt(HLE.landHeight,HLE.WORLD_HEIGHT*4),
+     s, r==true?'xyz':null );    // shoot all models from a group
   }
 
   //
@@ -208,13 +226,15 @@ var HLS ={
   //
   HLS.modelshooting = function(k){
     if(k.keyCode==81)//q
-      HLS.shootGroup('sea',5,false);
+      HLS.shootGroup('sea',8,false);
     if(k.keyCode==87)//w
-      HLS.shootGroup('weird',5,true);
+      HLS.shootGroup('weird',0,true);
     if(k.keyCode==69)//e
-      HLS.shootGroup('space',5,true);
+      HLS.shootGroup('space',0,true);
     if(k.keyCode==65)//a
       HLS.shootEverything();
+    if(k.keyCode==66)//b
+      HLS.trashEverything();
 
     if(k.keyCode==49)//1
       {HLS.startScene('scene1');}
@@ -230,4 +250,4 @@ var HLS ={
     }
 
   }
-  window.addEventListener('keydown',HLS.modelshooting);
+  window.addEventListener('keyup',HLS.modelshooting);
