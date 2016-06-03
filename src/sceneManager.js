@@ -181,9 +181,36 @@ var HLS ={
     HL.dynamicTextures.stars.c.fillStyle = 'white';
     HL.dynamicTextures.stars.c.fillText(HLS.story[Math.floor(frameCount/20%HLS.story.length)],10, 256);
     HL.dynamicTextures.stars.texture.needsUpdate=true;
+  }
 
+  HLS.scene4init = function(){
+    HL.materials.land.uniforms.color.value = HLC.land.setRGB(0,0,0);
+    HLC.horizon.setRGB(0,0,0);
+    HLS.raf = window.requestAnimationFrame(HLS.scene4);
 
   }
+
+  HLS.scene4 = function(){
+    HLH.loopParticles(HL.geometries.clouds, HLE.WORLD_WIDTH, HLE.moveSpeed*4);
+    HLS.raf = window.requestAnimationFrame(HLS.scene4);
+
+  }
+
+  HLS.scene5init = function(){
+    HL.materials.land.uniforms.color.value = HLC.land.setRGB(1,1,1);
+    HLC.horizon.setRGB(1,1,1);
+    HLS.raf = window.requestAnimationFrame(HLS.scene5);
+    HL.materials.skybox.map = null;
+    HL.materials.skybox.needsUpdate = true;
+
+    HL.materials.water.material.uniforms.color.value = HLC.land.set(0xffffff);
+    HL.materials.water.needsUpdate = true;
+  }
+
+  HLS.scene5 = function(){
+    HLH.loopParticles(HL.geometries.clouds, HLE.WORLD_WIDTH, HLE.moveSpeed*4);
+  }
+
 
   var camR=10,camT,camD,camX,camY,camZ=100;
   HLS.cameraRotation = function(){
@@ -242,6 +269,10 @@ var HLS ={
       {HLS.startScene('scene2');}
     if(k.keyCode==51)//3
       {HLS.startScene('scene3');}
+    if(k.keyCode==52)//4
+      {HLS.startScene('scene4');}
+    if(k.keyCode==53)//5
+      {HLS.startScene('scene5');}
 
     if(k.keyCode==67){//c
       HLE.CENTER_PATH=!HLE.CENTER_PATH;
